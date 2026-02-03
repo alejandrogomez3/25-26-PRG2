@@ -20,6 +20,31 @@ public class CalculadoraDescuentos {
         return total;
     }
 
+    static double aplicarDescuentos(double precio, int tipo, char rebajas, int cantidad) {
+        double finalPrecio = precio;
+
+        if (tipo == 1) {
+            if (rebajas == 's') finalPrecio -= finalPrecio * 0.10;
+            if (cantidad >= 5) finalPrecio -= finalPrecio * 0.05;
+        } else if (tipo == 2) {
+            finalPrecio -= finalPrecio * 0.15;
+            if (rebajas == 's') finalPrecio -= finalPrecio * 0.10;
+            if (cantidad >= 3) finalPrecio -= finalPrecio * 0.08;
+        } else if (tipo == 3) {
+            finalPrecio -= finalPrecio * 0.20;
+            if (rebajas == 's') finalPrecio -= finalPrecio * 0.15;
+            if (cantidad >= 2) finalPrecio -= finalPrecio * 0.10;
+        } else if (tipo == 4) {
+            finalPrecio -= finalPrecio * 0.30;
+            if (rebajas == 's') finalPrecio -= finalPrecio * 0.20;
+            if (cantidad >= 1) finalPrecio -= finalPrecio * 0.15;
+        }
+
+        if (finalPrecio > 500) finalPrecio -= 50;
+
+        return finalPrecio;
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
@@ -36,9 +61,17 @@ public class CalculadoraDescuentos {
             numProductos++;
         }
 
-        System.out.println(
-            calcularPrecioTotal(precios, cantidades, numProductos)
-        );
+        double precioTotal = calcularPrecioTotal(precios, cantidades, numProductos);
+        int cantidadTotal = calcularCantidadTotal(cantidades, numProductos);
+
+        System.out.print("Tipo cliente: ");
+        int tipo = sc.nextInt();
+        System.out.print("Rebajas (s/n): ");
+        char rebajas = sc.next().charAt(0);
+
+        double precioFinal = aplicarDescuentos(precioTotal, tipo, rebajas, cantidadTotal);
+
+        System.out.println("Precio final: " + precioFinal);
 
         sc.close();
     }
