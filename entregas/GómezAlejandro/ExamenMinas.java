@@ -41,8 +41,6 @@ public class ExamenMina{
 
 		while (juegoEncendido == 1){
 			for (i = 0; i < mapaMinasMostrar.length; i++){
-				for (int j = 0; j <= mapaMinasMostrar.length+1; j++){
-					System.out.print(mapaMinasMostrar[i][j]);
 				for (int j = 0; j < mapaMinasMostrar[i].length; j++){
 					System.out.print(mapaMinasMostrar[i][j] + " ");
 				}
@@ -55,6 +53,7 @@ public class ExamenMina{
 				posX = scan.nextInt();
 
 				if (posX > 5 || posY > 7){
+				if (posX < 1 || posX > 5 || posY < 1 || posY > 7){
 					valoresCorrectos = 0;
 				} else {
 					valoresCorrectos = 1;
