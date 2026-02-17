@@ -52,7 +52,7 @@ public class ExamenMina{
 				posY = scan.nextInt();
 				posX = scan.nextInt();
 
-				if (posX > 5 || posY > 7){
+				if (posX < 1 || posX > 5 || posY < 1 || posY > 7){
 					valoresCorrectos = 0;
 				} else {
 					valoresCorrectos = 1;
