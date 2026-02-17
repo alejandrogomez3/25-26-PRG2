@@ -73,6 +73,7 @@ public class ExamenMina{
 			if (contadorMinas > 2){
 				juegoEncendido = 0;
 			} else if (contadorMapa >= 31){
+			} else if (contadorMapa >= 30){
 				juegoEncendido = 0;
 			}
 		}
