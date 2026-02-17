@@ -25,15 +25,12 @@ public class ExamenMina{
 
 		int i = 0;
 		while (i < 5){
-			int PosYMina = (int)(Math.random()*2+1);
-			int PosXMina = (int)(Math.random()*4+1);
 			int PosYMina = (int)(Math.random()*7 + 1);
 			int PosXMina = (int)(Math.random()*5 + 1);
 
 			if (mapaMinasActivas[PosXMina][PosYMina].equals("1")){
 				i = i - 1;
 			} else {
-				mapaMinasActivas[PosXMina+1][PosYMina+1] = "1";
 				mapaMinasActivas[PosXMina][PosYMina] = "1";
 			}
 			i++;
@@ -46,6 +43,8 @@ public class ExamenMina{
 			for (i = 0; i < mapaMinasMostrar.length; i++){
 				for (int j = 0; j <= mapaMinasMostrar.length+1; j++){
 					System.out.print(mapaMinasMostrar[i][j]);
+				for (int j = 0; j < mapaMinasMostrar[i].length; j++){
+					System.out.print(mapaMinasMostrar[i][j] + " ");
 				}
 				System.out.println();
 			}
