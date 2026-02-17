@@ -25,13 +25,13 @@ public class ExamenMina{
 
 		int i = 0;
 		while (i < 5){
-			int PosYMina = (int)(Math.random()*2+1);
-			int PosXMina = (int)(Math.random()*4+1);
+			int PosYMina = (int)(Math.random()*7 + 1);
+			int PosXMina = (int)(Math.random()*5 + 1);
 
 			if (mapaMinasActivas[PosXMina][PosYMina].equals("1")){
 				i = i - 1;
 			} else {
-				mapaMinasActivas[PosXMina+1][PosYMina+1] = "1";
+				mapaMinasActivas[PosXMina][PosYMina] = "1";
 			}
 			i++;
 		}
