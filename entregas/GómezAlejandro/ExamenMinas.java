@@ -2,79 +2,71 @@ import java.util.Scanner;
 
 public class ExamenMina{
 
-	static String[][] mapaMinasMostrar = {
-		{" ", "1", "2", "3", "4", "5", "6", "7"},
-		{"1", "-", "-", "-", "-", "-", "-", "-"},
-		{"2", "-", "-", "-", "-", "-", "-", "-"},
-		{"3", "-", "-", "-", "-", "-", "-", "-"},
-		{"4", "-", "-", "-", "-", "-", "-", "-"},
-		{"5", "-", "-", "-", "-", "-", "-", "-"}
-	};
+	static final int FILAS = 5;
+	static final int COLUMNAS = 7;
+	static final int MINAS = 5;
+	static final int MAX_EXPLOSIONES = 3;
 
-	static String[][] mapaMinasActivas = {
-		{" ", "1", "2", "3", "4", "5", "6", "7"},
-		{"1", "0", "0", "0", "0", "0", "0", "0"},
-		{"2", "0", "0", "0", "0", "0", "0", "0"},
-		{"3", "0", "0", "0", "0", "0", "0", "0"},
-		{"4", "0", "0", "0", "0", "0", "0", "0"},
-		{"5", "0", "0", "0", "0", "0", "0", "0"}
-	};
+	static String[][] mapaMinasMostrar = new String[FILAS+1][COLUMNAS+1];
+	static String[][] mapaMinasActivas = new String[FILAS+1][COLUMNAS+1];
 
 	public static void main(String[] args){
 		Scanner scan = new Scanner(System.in);
 
-		int i = 0;
-		while (i < 5){
-			int PosYMina = (int)(Math.random()*7 + 1);
-			int PosXMina = (int)(Math.random()*5 + 1);
-
-			if (mapaMinasActivas[PosXMina][PosYMina].equals("1")){
-				i = i - 1;
-			} else {
-				mapaMinasActivas[PosXMina][PosYMina] = "1";
+		for (int i = 1; i <= FILAS; i++){
+			for (int j = 1; j <= COLUMNAS; j++){
+				mapaMinasMostrar[i][j] = "-";
+				mapaMinasActivas[i][j] = "0";
 			}
-			i++;
 		}
 
-		int posX = 0, posY = 0, juegoEncendido = 1;
-		int valoresCorrectos, contadorMapa = 0, contadorMinas = 0;
+		int minasColocadas = 0;
+		while (minasColocadas < MINAS){
+			int x = (int)(Math.random()*FILAS + 1);
+			int y = (int)(Math.random()*COLUMNAS + 1);
 
-		while (juegoEncendido == 1){
-			for (i = 0; i < mapaMinasMostrar.length; i++){
-				for (int j = 0; j < mapaMinasMostrar[i].length; j++){
+			if (mapaMinasActivas[x][y].equals("0")){
+				mapaMinasActivas[x][y] = "1";
+				minasColocadas++;
+			}
+		}
+
+		int posX = 0, posY = 0;
+		int contadorMinas = 0;
+		int casillasSeguras = 0;
+		boolean juegoEncendido = true;
+
+		while (juegoEncendido){
+			for (int i = 1; i <= FILAS; i++){
+				for (int j = 1; j <= COLUMNAS; j++){
 					System.out.print(mapaMinasMostrar[i][j] + " ");
 				}
 				System.out.println();
 			}
 
-			valoresCorrectos = 0;
-			while (valoresCorrectos == 0){
+			boolean valoresCorrectos = false;
+			while (!valoresCorrectos){
 				posY = scan.nextInt();
 				posX = scan.nextInt();
 
-				if (posX < 1 || posX > 5 || posY < 1 || posY > 7){
-					valoresCorrectos = 0;
-				} else if (!mapaMinasMostrar[posX][posY].equals("-")){
-					valoresCorrectos = 0;
-				} else {
-					valoresCorrectos = 1;
+				if (posX >= 1 && posX <= FILAS && posY >= 1 && posY <= COLUMNAS &&
+					mapaMinasMostrar[posX][posY].equals("-")){
+					valoresCorrectos = true;
 				}
 			}
 
 			if (mapaMinasActivas[posX][posY].equals("1")){
 				mapaMinasMostrar[posX][posY] = "x";
 				contadorMinas++;
-			} else if (mapaMinasActivas[posX][posY].equals("0")){
+			} else {
 				mapaMinasMostrar[posX][posY] = ".";
+				casillasSeguras++;
 			}
 
-			contadorMapa++;
-
-			if (contadorMinas > 2){
-				juegoEncendido = 0;
-			} else if (contadorMapa >= 31){
-			} else if (contadorMapa >= 30){
-				juegoEncendido = 0;
+			if (contadorMinas >= MAX_EXPLOSIONES){
+				juegoEncendido = false;
+			} else if (casillasSeguras >= FILAS*COLUMNAS - MINAS){
+				juegoEncendido = false;
 			}
 		}
 	}
